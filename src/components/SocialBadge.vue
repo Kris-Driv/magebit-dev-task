@@ -1,5 +1,5 @@
 <template>
-    <a href="#" class="social-logo" :class="'social-logo--' + name">
+    <a href="#" class="social-logo" @click="handleClick" :class="'social-logo--' + name">
         <i class="fa" :class="logo" aria-hidden="true"></i>
     </a>
 </template>
@@ -10,6 +10,11 @@ export default {
     data: function() {
         return {
             color: "",
+        }
+    },
+    methods: {
+        handleClick: function(event) {
+            event.preventDefault();
         }
     },
     props: {

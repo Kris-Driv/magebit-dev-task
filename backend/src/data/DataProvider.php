@@ -13,6 +13,8 @@ abstract class DataProvider {
 
     public abstract function getAllSubscriptions(): array;
 
+    public abstract function getDomains(): array;
+
     public abstract function getSubscriptionsWhereDomain(string $email): array;
 
     public abstract function insertNewSubscription(string $email): void;
