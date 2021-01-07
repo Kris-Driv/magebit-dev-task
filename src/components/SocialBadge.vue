@@ -23,8 +23,8 @@ export default {
             switch(this.name) {
                 case "facebook": return "fa-facebook";
                 case "instagram": return "fa-instagram";
-                case "twitter": return require('../assets/images/ic_twitter.svg');
-                case "youtube": return require('../assets/images/ic_youtube.svg');
+                case "twitter": return "fa-twitter";
+                case "youtube": return "fa-youtube-play";
                 default: 
                     console.error("Badge can't resolve logo");
                     return this.name;
@@ -64,13 +64,19 @@ export default {
         background-color: #FF0000;
         border: 2px solid #FF0000;
     }
+
+    & i {
+        font-size: 16px;
+        line-height: 16px;
+        color: #E2E3E4;
+    }
 }
 .social-logo:hover {
     cursor: pointer;
     box-shadow: 0px 20px 40px rgba(19, 24, 33, 0.3);
     
-    & img {
-        fill: #fff;
+    & i {
+        color: #fff;
     }
 }
 </style>
