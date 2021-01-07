@@ -18,6 +18,24 @@ h1 {
     line-height: 44px;
 }
 
+a {
+    font-family: Arial;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 28px;
+    color: #131821;
+    text-decoration-line: underline;
+}
+
+a:hover {
+    color: #4066A5;
+}
+
+a:active {
+    color: #233759;
+}
+
 .background {
     background: url("../assets/images/image_summer.png");
     background-repeat: no-repeat;
@@ -76,6 +94,10 @@ h1 {
 
 
     color: #6A707B;
+
+    &:hover {
+        color: #4066A5;
+    }
 }
 .nav-list__list-item:last-child {
     margin-right: 0px;
@@ -120,7 +142,16 @@ h1 {
     border: 1px solid #E3E3E4;
     border-left: 4px solid #4066A5;
     padding-left: 40px;
-    padding-right: 40px;
+    padding-right: 104px;
+
+    font-family: Arial;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+    
+    /* Now! I didn't want to do this, but for "design" purposes I will. */
+    outline: none;
 }
 .custom-input__text::placeholder {
     font-family: Arial;
@@ -130,6 +161,14 @@ h1 {
     line-height: 24px;
 
     color: #6A707B;
+}
+.custom-input__text:focus {
+    box-shadow: 0px 30px 40px rgba(19, 24, 33, 0.06);
+}
+.custom-input__text:hover {
+    border-right: 1px solid #4066A5;
+    border-top: 1px solid #4066A5;
+    border-bottom: 1px solid #4066A5;
 }
 .custom-input__submit {
     position: absolute;
@@ -150,8 +189,6 @@ h1 {
     font-weight: normal;
     font-size: 16px;
     line-height: 28px;
-    /* identical to box height, or 175% */
-
 
     color: #6A707B;
 }
@@ -177,7 +214,7 @@ h1 {
 .socials-list li {
     display: inline;
 
-    &> div {
+    &> a {
         margin-right: 20px;
     }
 }

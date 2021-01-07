@@ -1,7 +1,7 @@
 <template>
-    <div class="social-logo" :class="'social-logo--' + name">
+    <a href="#" class="social-logo" :class="'social-logo--' + name">
         <i class="fa" :class="logo" aria-hidden="true"></i>
-    </div>
+    </a>
 </template>
 
 <script>
@@ -44,6 +44,7 @@ export default {
     justify-content: center;
     align-items: center;
     display: inline-flex;
+    text-decoration: none;
 
     &--facebook:hover {
         background-color: #4267B2;
@@ -69,6 +70,11 @@ export default {
         font-size: 16px;
         line-height: 16px;
         color: #E2E3E4;
+    }
+
+    &:active {
+        background-color: #2F4A80;
+        border: 2px solid #2F4A80;
     }
 }
 .social-logo:hover {
