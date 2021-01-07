@@ -4,7 +4,13 @@
         <p class="box-wrapper__sub-heading">Subscribe to our newsletter and get 10% discount on pineapple glasses.</p>
         <form action="subscribe.php" method="POST"></form>
         <div class="custom-input">
-            <input type="email" class="custom-input__text" placeholder="Type your email address here...">
+            <input 
+                type="email" 
+                class="custom-input__text" 
+                placeholder="Type your email address here..."
+                v-model="email"
+                v-on:keydown="validate"
+                >
             <a href="#" class="custom-input__submit" v-on:click="submitForm">
                 <img src="../assets/images/ic_arrow.svg" alt="">
             </a>
@@ -40,9 +46,20 @@ export default {
     components: {
         SocialBadge
     },
+    data: function() {
+        return {
+            email: "",
+            validated: false,
+        }
+    },
     methods: {
         submitForm: function() {
-            // TODO
+            this.validate();
+
+            
+        },
+        validate: function() {
+            this.validated = false;
         }
     },
 }

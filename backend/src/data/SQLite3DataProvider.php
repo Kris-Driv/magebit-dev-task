@@ -76,6 +76,7 @@ class SQLite3DataProvider extends DataProvider {
     {
         $email = SQLite3::escapeString($email);
         $stmt = $this->connection->prepare("DELETE FROM subscriptions WHERE email = '$email';");
+        $stmt->execute();
     }
 
     public function close()

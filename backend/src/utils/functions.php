@@ -6,8 +6,8 @@ function paginate(array $items, int $limit, int $page) : array
     $maxPage = count($pages);
     $page = max(min($page, $maxPage), 1);
 
-    $nextPage = $page + 1;
-    $nextPage = isset($pages[$nextPage]) ? $nextPage : null;
+    $nextPage = $page;
+    $nextPage = isset($pages[$nextPage]) ? $nextPage + 1 : null;
 
     $prevPage = $page - 2;
     $prevPage = isset($pages[$prevPage]) ? $prevPage + 1 : null;

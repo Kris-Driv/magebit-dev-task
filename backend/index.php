@@ -12,6 +12,13 @@ $status = 200;
 
 $route = substr($uri, 0, ($p = strpos($uri, '?')) === false ? strlen($uri) : $p);
 
+if(empty($route)) $route = "admin.php";
+
+if(file_exists($route) && $route !== basename(__FILE__)) {
+    require($route);
+    return;
+}
+
 switch($route) {
 
     case 'get-all':
@@ -76,7 +83,7 @@ switch($route) {
 
         $app->getData()->deleteSubscription($email);
 
-        $return = ["message" => "ok"];
+        $return = ["message" => "ok", "email" => $email];
 
         break;
     case 'view':
