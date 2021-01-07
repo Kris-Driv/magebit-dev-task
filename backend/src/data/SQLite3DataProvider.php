@@ -54,6 +54,17 @@ class SQLite3DataProvider extends DataProvider {
         return $this->query("SELECT * from subscriptions;");
     }
 
+    public function getDomains(): array {
+        $all = $this->getAllSubscriptions();
+        $domains = [];
+        foreach($all as $row) {
+            $parts = explode("@", $row["email"]);
+            $domain = array_pop($parts);
+            if(!in_array($domain, $domains, true)) $domains[] = $domain;
+        }
+        return $domains;
+    }
+
     /**
      * Accepts email domain without '@' symbol
      */

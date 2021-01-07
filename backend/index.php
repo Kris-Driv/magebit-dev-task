@@ -49,6 +49,13 @@ switch($route) {
         $return = paginate($return, $limit, $page);
         break;
 
+    case 'get-all-domains':
+
+        $isJSON = true;
+        $return = ["domains" => $app->getData()->getDomains()];
+
+        break;
+
     case 'insert':
         $isJSON = true;
 

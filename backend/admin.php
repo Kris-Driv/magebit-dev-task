@@ -10,6 +10,9 @@
 </head>
 <body onload="init();">
     <div class="container">
+        <div class="row">
+            <ul id="domains"></ul>
+        </div>
         <table class="table" id="subscription-table">
             <thead>
                 <tr>
@@ -43,5 +46,16 @@
             </ul>
         </nav>
     </div>
+
+    <style>
+        #domains {
+            margin: 20px;
+            list-style: none;
+        }
+        #domains li {
+            margin-right: 10px;
+            display: inline;
+        }
+    </style>
 </body>
 </html>

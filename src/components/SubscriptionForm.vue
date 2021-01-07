@@ -56,7 +56,9 @@ export default {
         submitForm: function() {
             this.validate();
 
-            
+            if(this.validated) {
+                
+            }
         },
         validate: function() {
             this.validated = false;

@@ -1,6 +1,7 @@
 let table, tbody, pagination;
 let page = 1;
 let domain = null;
+let domains = [];
 let items = [];
 let paginationData = [];
 
@@ -10,6 +11,36 @@ function init() {
     pagination = document.getElementById("pagination");
 
     populateTable(page, null);
+    populateDomains();
+}
+
+function populateDomains() {
+    $.ajax({
+        url: '/get-all-domains'
+    }).then(response => {
+        domains = response.domains;
+        console.log(domains);
+
+        let list = document.getElementById("domains");
+        list.innerHTML = "";
+        domains.forEach(b => {
+            let li = document.createElement("li");
+            let btn = document.createElement("button");
+            btn.classList.add("btn");
+            if(domain === b) btn.classList.add("btn-primary");
+            else btn.classList.add("btn-dark");
+            btn.innerHTML = b;
+            btn.addEventListener("click", () => {
+                populateTable(page, b);
+                populateDomains();
+            });
+            li.appendChild(btn)
+            list.appendChild(li);
+        });
+
+    }, err => {
+        console.log(err);
+    });
 }
 
 function populateTable(_page, _domain = null) {
@@ -74,6 +105,7 @@ function deleteSubscription(id) {
     }
 
     populateTable(page, domain);
+    populateDomains();
 }
 
 function updatePagination(currentPage, nextPage, previousPage, maxPages) {
