@@ -1,6 +1,6 @@
 let table, tbody, pagination;
 let page = 1;
-let domain = null;
+let domain = "";
 let domains = [];
 let items = [];
 let paginationData = [];
@@ -10,6 +10,7 @@ let download = null;
 let search = null;
 let filter = "";
 let sort = "desc";
+let sortval = null;
 
 function init() {
     table = document.getElementById("subscription-table");
@@ -17,6 +18,7 @@ function init() {
     pagination = document.getElementById("pagination");
     download = document.getElementById("download");
     search = document.getElementById("search");
+    sortval = document.getElementById("sortval");
     selectedData = new Map();
 
     download.addEventListener("click", () => downloadCSV(selectedData));
@@ -24,10 +26,10 @@ function init() {
     search.addEventListener("keyup", (e) => {
         filter = search.value;
 
-        populateTable(page, domain, filter);
+        populateTable(page, domain, filter, sort);
     });
 
-    populateTable(page, "", "", sort);
+    populateTable(page, domain, filter, sort);
     populateDomains();
 }
 
@@ -52,9 +54,9 @@ function populateDomains() {
                 if(domain === b) {
                     btn.classList.remove("btn-primary");
                     btn.classList.add("btn-dark");
-                    populateTable(page);
+                    populateTable(page, domain, filter, sort);
                 } else {
-                    populateTable(page, b);
+                    populateTable(page, b, filter, sort);
                     populateDomains();
                 }
             });
@@ -99,7 +101,7 @@ function _populateTable(items, response) {
         items = items || response.items;
         sorted = [];
 
-        for(var i = 0; i < items.length; i++) {
+        for(let i in items) {
             let id = items[i].id || i;
             sorted[id] = items[i];
 
@@ -115,6 +117,7 @@ function _populateTable(items, response) {
             let actionsButtons = createActions(id);
             actionsButtons.forEach(b => actionsColumn.appendChild(b));
         }
+        console.log(sorted, "HEYYOOO");
 
         items = sorted;
 }
@@ -141,9 +144,8 @@ function createActions(id) {
             selected.splice(selected.indexOf(id), 1);
             selectedData.delete(id);
         } else {
-            selectedData.set(id, items[id]);
+            selectedData.set(id, sorted[id]);
             selected.push(id);
-            // console.log(items);
         }
         console.log(selectedData);
         updateDownload();
@@ -247,7 +249,7 @@ function downloadCSV(list, keys) {
     console.log(blob);
 }
 
-function timeConverter(time){
+function timeConverter(time) {
     var a = new Date(time * 1000);
     var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     var year = a.getFullYear();
@@ -258,4 +260,13 @@ function timeConverter(time){
     var sec = a.getSeconds();
     var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
     return time;
-  }
+}
+
+function swapSort() {
+    sort = sort === "desc" ? "asc" : "desc";
+
+    sortval.innerHTML = `(${sort})`;
+
+    populateTable(page, domain, filter, sort);
+}
+

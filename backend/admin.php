@@ -20,7 +20,7 @@
             <thead>
                 <tr>
                 <th scope="col">E-Mail</th>
-                <th scope="col">Creation Date</th>
+                <th scope="col"><a href="#" onclick="swapSort()">Creation Date</a> <span id="sortval"></span></th>
                 <th scope="col">Actions</th>
                 </tr>
             </thead>
