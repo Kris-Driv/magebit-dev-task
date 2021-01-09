@@ -11,7 +11,7 @@
                 v-model="email"
                 v-on:keydown="validate"
                 >
-            <a href="#" class="custom-input__submit" v-on:click="submitForm">SEND</a>
+            <a href="#" class="custom-input__submit" v-on:click="submitForm"></a>
         </div>
         <div class="tos">
             <input class="tos__checkbox" type="checkbox">

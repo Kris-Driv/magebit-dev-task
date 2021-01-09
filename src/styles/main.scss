@@ -16,6 +16,8 @@ h1 {
     font-weight: 400;
     font-size: 32px;
     line-height: 44px;
+    font-size: 32px;
+    color: #131821;
 }
 
 a {
@@ -34,6 +36,15 @@ a:hover {
 
 a:active {
     color: #233759;
+}
+
+p {
+    font-family: Arial;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 28px;
+    color: #6A707B;
 }
 
 .background {
@@ -108,21 +119,7 @@ a:active {
     padding-right: 140px;
     position: relative;
 }
-h1 {
-    font-family: Georgia;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 32px;
-    line-height: 44px;
-    color: #131821;
-}
 .box-wrapper__sub-heading {
-    font-family: Arial;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 28px;
-    color: #6A707B;
     margin-top: 15px;
 }
 .custom-input {
@@ -165,16 +162,25 @@ h1 {
 .custom-input__text:focus {
     box-shadow: 0px 30px 40px rgba(19, 24, 33, 0.06);
 }
-.custom-input__text:hover {
-    border-right: 1px solid #4066A5;
-    border-top: 1px solid #4066A5;
-    border-bottom: 1px solid #4066A5;
+.custom-input:hover {
+
+    .custom-input__text {
+        border-right: 1px solid #4066A5;
+        border-top: 1px solid #4066A5;
+        border-bottom: 1px solid #4066A5;
+    }
+
+    .custom-input__submit {
+        background-image: url('../assets/images/ic_arrow_active.svg');
+    }
 }
 .custom-input__submit {
     position: absolute;
     right: 40px;
     z-index: 1;
     height: 14px;
+    width: 24px;
+    background-image: url('../assets/images/ic_arrow.svg');
 }
 .tos {
     margin-top: 55px;
@@ -240,6 +246,9 @@ h1 {
 
 // Responsivness
 @media (max-width: 680px) {
+    body {
+        height: 746px;
+    }
     h1 {
         font-size: 24px;
         line-height: 34px;
@@ -254,8 +263,11 @@ h1 {
         width: 100%;
     }
     .background {
-        position: fixed;
-        left: -300px;
+        top: 66px;
+        left: -281px;
+        width: 1119px;
+        height: 746px;
+        background-size: cover;
     }
     .custom-input {
         width: 295px;
@@ -265,7 +277,7 @@ h1 {
     .box-wrapper {
         width: 335px;
         height: 370px;
-        margin-top: 188px;
+        margin-top: 255px;
         background-color: #fff;
         padding: 20px;
     }
