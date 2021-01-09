@@ -110,7 +110,7 @@ function createActions(id) {
     checkbox.name = "download";
     checkbox.value = false;
     checkbox.id = "checkbox-" + id;
-    checkbox.style = "position: absolute; right: 5px; width: 20px; height: 20px; top: 16px";
+    checkbox.style = "position: absolute; right: 5px; width: 20px; height: 20px; top: 16px; margin-left: 5px;";
     checkbox.checked = selected.indexOf(id) >= 0;
     checkbox.addEventListener("click", () => {
         //console.log({id, indexOf: selected.indexOf(id)});

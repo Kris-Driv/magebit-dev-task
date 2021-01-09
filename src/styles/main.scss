@@ -277,7 +277,7 @@ p {
 // Responsivness
 @media (max-width: 680px) {
     body {
-        height: 746px;
+        height: 100%;
     }
     h1 {
         font-size: 24px;
@@ -314,6 +314,10 @@ p {
         margin-top: 255px;
         background-color: #fff;
         padding: 20px;
+    }
+    .error-message {
+        font-size: 12px;
+        top: -22px;
     }
     .custom-input {
         margin: 0px;
