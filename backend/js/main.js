@@ -7,15 +7,24 @@ let paginationData = [];
 let selected = [];
 let selectedData = null;
 let download = null;
+let search = null;
+let filter = "";
 
 function init() {
     table = document.getElementById("subscription-table");
     tbody = table.getElementsByTagName("tbody")[0];
     pagination = document.getElementById("pagination");
     download = document.getElementById("download");
+    search = document.getElementById("search");
     selectedData = new Map();
 
     download.addEventListener("click", () => downloadCSV(selectedData));
+    search = document.getElementById("search");
+    search.addEventListener("keyup", (e) => {
+        filter = search.value;
+
+        populateTable(page, domain, filter);
+    });
 
     populateTable(page, null);
     populateDomains();
@@ -57,26 +66,41 @@ function populateDomains() {
     });
 }
 
-function populateTable(_page, _domain = null) {
+function populateTable(_page, _domain = null, _filter = "") {
     page = _page;
     domain = _domain;
+    filter = _filter;
+
+    let data = {
+        page: page || 1,
+    }
+    if(domain.length > 0) data.domain = domain;
+    if(filter.length > 0) data.filter = filter;
 
     $.ajax({
         url: '/get-all',
-        data: {
-            page: page || 1,
-            domain
-        }
+        data
     }).then(response => {
         // Clean placeholder row
+        _populateTable(null, response);
+
+        updatePagination(response.page, response.next, response.previous, response['total-pages']);
+    }, err => {
+        console.error(err);
+    });
+}
+
+function _populateTable(items, response) {
         tbody.innerHTML = "";
 
-        items = response.items;
+        items = items || response.items;
         sorted = [];
+
         for(var i = 0; i < items.length; i++) {
-            let row = tbody.insertRow(i);
             let id = items[i].id || i;
             sorted[id] = items[i];
+
+            let row = tbody.insertRow(i);
             row.id = 'row-' + id;
             row.dataset.id = id;
             let email = row.insertCell(0);
@@ -88,12 +112,8 @@ function populateTable(_page, _domain = null) {
             let actionsButtons = createActions(id);
             actionsButtons.forEach(b => actionsColumn.appendChild(b));
         }
-        items = sorted;
 
-        updatePagination(response.page, response.next, response.previous, response['total-pages']);
-    }, err => {
-        console.error(err);
-    });
+        items = sorted;
 }
 
 function createActions(id) {

@@ -11,7 +11,10 @@
 <body onload="init();">
     <div class="container">
         <div class="row">
-            <ul id="domains"></ul>
+            <ul id="domains" class="left col"></ul>
+            <div class="right col">
+                <input type="text" name="search" id="search">
+            </div>
         </div>
         <table class="table" id="subscription-table">
             <thead>
@@ -59,6 +62,13 @@
             float: left;
         }
         #download {
+            float: right;
+        }
+        #search {
+            max-width: 200px;
+            width: 100%;
+            margin-top: 80px;
+            margin-bottom: 5px;
             float: right;
         }
     </style>
