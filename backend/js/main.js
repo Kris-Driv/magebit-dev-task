@@ -54,6 +54,7 @@ function populateDomains() {
                 if(domain === b) {
                     btn.classList.remove("btn-primary");
                     btn.classList.add("btn-dark");
+                    domain = "";
                     populateTable(page, domain, filter, sort);
                 } else {
                     populateTable(page, b, filter, sort);
