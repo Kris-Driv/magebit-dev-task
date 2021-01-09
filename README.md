@@ -3,6 +3,8 @@
 ## Running
 
 ### back-end
+
+***PHP 7.4^*** 
 By default it will use sqlite3 database. See `backend/config.php` to configure backend. (SQLite3 requires no setup)
 
 To start serving, use php built-in server.
