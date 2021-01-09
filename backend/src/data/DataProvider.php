@@ -27,4 +27,6 @@ abstract class DataProvider {
 
     public abstract function ready(): bool;
 
+    public abstract function setup(): void;
+
 }

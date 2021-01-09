@@ -19,9 +19,7 @@ class SQLite3DataProvider extends DataProvider {
             if(!file_exists($file)) {
                 touch($file);
                 $this->needSetup = true;
-            }
-            
-            $this->open();
+            }            
         } else {
             throw new InvalidArgumentException("no database path was given in options");
         }
@@ -34,7 +32,7 @@ class SQLite3DataProvider extends DataProvider {
         $this->connection = new SQLite3($file);
 
         if($this->needSetup) {
-            $this->connection->exec(file_get_contents("resources/sql3_setup.sql"));
+            $this->setup();
         }
     }
 
@@ -105,6 +103,10 @@ class SQLite3DataProvider extends DataProvider {
 
     public function ready(): bool {
         return $this->connection instanceof SQLite3;
+    }
+
+    public function setup(): void {
+        $this->connection->exec(file_get_contents("resources/sql3_setup.sql"));
     }
 
     public function __destruct()

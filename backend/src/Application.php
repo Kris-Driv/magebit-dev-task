@@ -19,6 +19,8 @@ class Application {
             default: throw new \InvalidArgumentException("unsupported data provider type '{$config['connection']}'");
         }
 
+        $this->dataProvider->open();
+
         if($this->dataProvider->ready() === false) {
             exit("Data provider failed.");
         }

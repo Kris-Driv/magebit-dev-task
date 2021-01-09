@@ -12,7 +12,7 @@ function paginate(array $items, int $limit, int $page) : array
     $prevPage = $page - 2;
     $prevPage = isset($pages[$prevPage]) ? $prevPage + 1 : null;
 
-    $items = $pages[$page-1];
+    $items = $pages[$page-1] ?? [];
 
     return [
         "items" => $items,
