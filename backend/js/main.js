@@ -31,6 +31,13 @@ function populateDomains() {
             else btn.classList.add("btn-dark");
             btn.innerHTML = b;
             btn.addEventListener("click", () => {
+                // Reset the domain filter
+                if(domain === b) {
+                    btn.classList.remove("btn-primary");
+
+                    populateTable(page);
+                    populateDomains();
+                }
                 populateTable(page, b);
                 populateDomains();
             });

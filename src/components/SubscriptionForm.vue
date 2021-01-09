@@ -3,7 +3,7 @@
         <div v-if="subscribed === false">
             <h1>Subscribe to newsletter</h1>
             <p class="box-wrapper__sub-heading">Subscribe to our newsletter and get 10% discount on pineapple glasses.</p>
-            <form action="subscribe.php" method="POST"></form>
+            <form v-on:submit.prevent="submitForm"></form>
             <div class="custom-input">
                 <input 
                     type="email" 
@@ -11,6 +11,7 @@
                     placeholder="Type your email address here..."
                     v-model="email"
                     @keyup="validate"
+                    v-on:keyup.enter="submitForm"
                     >
                 <a href="#" class="custom-input__submit" v-on:click="submitForm"></a>
                 <span class="error-message" v-if="error.length > 0">{{ error }}</span>
@@ -81,7 +82,6 @@ export default {
     methods: {
         submitForm: function(e) {
             e.preventDefault();
-            console.log(this.tos);
 
             this.clicked = true;
             this.validate();
@@ -93,7 +93,6 @@ export default {
                     }
                 }).then(response => {
                     // redirect
-                    console.log(response);
                     if(response.status === 200) {
                         this.subscribed = true;
                     }
