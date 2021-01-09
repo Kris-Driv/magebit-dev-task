@@ -24,3 +24,13 @@ function paginate(array $items, int $limit, int $page) : array
         "total" => count($items)
     ];
 }
+
+function filter(array $items, string $match) : array {
+    $ret = [];
+    $match = strtolower($match);
+    foreach($items as $item) {
+        if(strpos($item["email"], $match) === false) continue;
+        $ret[] = $item;
+    }
+    return $ret;
+}

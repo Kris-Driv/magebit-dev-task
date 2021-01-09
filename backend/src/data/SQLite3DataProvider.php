@@ -47,9 +47,9 @@ class SQLite3DataProvider extends DataProvider {
         return $rows;
     }
 
-    public function getAllSubscriptions(): array
+    public function getAllSubscriptions(string $sort = "desc"): array
     {
-        return $this->query("SELECT rowid AS id, * from subscriptions;");
+        return $this->query("SELECT rowid AS id, * from subscriptions ORDER BY created_at {$sort};");
     }
 
     public function getDomains(): array {
@@ -66,10 +66,10 @@ class SQLite3DataProvider extends DataProvider {
     /**
      * Accepts email domain without '@' symbol
      */
-    public function getSubscriptionsWhereDomain(string $domain): array
+    public function getSubscriptionsWhereDomain(string $domain, string $sort = "desc"): array
     {
         $domain = SQLite3::escapeString(strtolower($domain));
-        return $this->query("SELECT * from subscriptions WHERE email LIKE '%@$domain%';");
+        return $this->query("SELECT * from subscriptions WHERE email LIKE '%@$domain%' ORDER BY created_at $sort;");
     }
 
     public function insertNewSubscription(string $email): void

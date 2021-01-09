@@ -43,9 +43,9 @@ class MySQLDataProvider extends DataProvider {
         return [];
     }
 
-    public function getAllSubscriptions(): array
+    public function getAllSubscriptions(string $sort = "desc"): array
     {
-        return $this->query("SELECT * from subscriptions;");
+        return $this->query("SELECT * from subscriptions ORDER BY created_at $sort;");
     }
 
     public function getDomains(): array {
@@ -62,10 +62,10 @@ class MySQLDataProvider extends DataProvider {
     /**
      * Accepts email domain without '@' symbol
      */
-    public function getSubscriptionsWhereDomain(string $domain): array
+    public function getSubscriptionsWhereDomain(string $domain, string $sort = "desc"): array
     {
         $domain = mysqli_escape_string($this->connection, strtolower($domain));
-        return $this->query("SELECT * from subscriptions WHERE email LIKE '%@$domain%';");
+        return $this->query("SELECT * from subscriptions WHERE email LIKE '%@$domain%' ORDER BY $sort;");
     }
 
     public function insertNewSubscription(string $email): void

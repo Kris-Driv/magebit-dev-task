@@ -40,6 +40,13 @@ switch($route) {
     case 'get-all':
         $isJSON = true;
 
+        $sort = $_GET["sort"] ?? "desc";
+        if(!in_array($sort, ["desc", "asc"], true)) {
+            $status = 400;
+            $return = ["message" => "sort must be desc or asc"];
+            break;
+        }
+
         $page = $_GET["page"] ?? 1;
         if(!is_numeric($page) || $page < 0) {
             $status = 400;
@@ -54,12 +61,16 @@ switch($route) {
             break;
         }
 
-
         $domain = $_GET["domain"] ?? null;
         if($domain) {
-            $return = $app->getData()->getSubscriptionsWhereDomain($domain);
+            $return = $app->getData()->getSubscriptionsWhereDomain($domain, $sort);
         } else {
-            $return = $app->getData()->getAllSubscriptions();
+            $return = $app->getData()->getAllSubscriptions($sort);
+        }
+
+        $filter = $_GET["filter"] ?? null;
+        if($filter) {
+            $return = filter($return, $filter);
         }
 
         $return = paginate($return, $limit, $page);

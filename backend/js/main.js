@@ -9,6 +9,7 @@ let selectedData = null;
 let download = null;
 let search = null;
 let filter = "";
+let sort = "desc";
 
 function init() {
     table = document.getElementById("subscription-table");
@@ -26,7 +27,7 @@ function init() {
         populateTable(page, domain, filter);
     });
 
-    populateTable(page, null);
+    populateTable(page, "", "", sort);
     populateDomains();
 }
 
@@ -66,16 +67,18 @@ function populateDomains() {
     });
 }
 
-function populateTable(_page, _domain = null, _filter = "") {
+function populateTable(_page, _domain = "", _filter = "", _sort = "desc") {
     page = _page;
     domain = _domain;
     filter = _filter;
+    sort = _sort;
 
     let data = {
         page: page || 1,
     }
     if(domain.length > 0) data.domain = domain;
     if(filter.length > 0) data.filter = filter;
+    if(sort.length > 0) data.sort = sort;
 
     $.ajax({
         url: '/get-all',
