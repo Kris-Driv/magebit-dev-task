@@ -31,8 +31,12 @@ class Application {
         return $this->dataProvider;
     }
 
-    public function validateEmail(): array {
-        return [];
+    public function validateEmail(string $email): array {
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return [];
+        } else {
+            return ["$email is not a valid email"];
+        }
     }
 
     
