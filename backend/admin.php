@@ -26,11 +26,18 @@
             </tbody>
         </table>
 
-        <nav aria-label="...">
-            <ul id="pagination" class="pagination">
-                <p>Database is empty</p>
-            </ul>
-        </nav>
+        <div class="row">
+            <div class="left col">
+                <nav aria-label="...">
+                    <ul id="pagination" class="pagination">
+                        <p>Database is empty</p>
+                    </ul>
+                </nav>
+            </div>
+            <div class="right col">
+                <button id="download" class="btn btn-success" disabled>Download</button>
+            </div>
+        </div>
     </div>
 
     <style>
@@ -41,6 +48,18 @@
         #domains li {
             margin-right: 10px;
             display: inline;
+        }
+        .right, .left {
+            display: inline;
+        }
+        .right {
+            float: right;
+        }
+        .left {
+            float: left;
+        }
+        #download {
+            float: right;
         }
     </style>
 </body>

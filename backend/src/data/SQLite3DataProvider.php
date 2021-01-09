@@ -49,7 +49,7 @@ class SQLite3DataProvider extends DataProvider {
 
     public function getAllSubscriptions(): array
     {
-        return $this->query("SELECT * from subscriptions;");
+        return $this->query("SELECT rowid AS id, * from subscriptions;");
     }
 
     public function getDomains(): array {
@@ -83,7 +83,7 @@ class SQLite3DataProvider extends DataProvider {
 
     public function isEmailRegistered(string $email): bool {
         $email = SQLite3::escapeString(strtolower($email));
-        return !empty($this->query("SELECT * FROM subscriptions WHERE email = '$email';"));
+        return !empty($this->query("SELECT rowid FROM subscriptions WHERE email = '$email';"));
     }
 
     public function deleteSubscription(string $email): void

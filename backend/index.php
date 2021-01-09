@@ -33,7 +33,10 @@ if(file_exists($route) && $route !== basename(__FILE__)) {
 // This will quickly grow out of control. TODO: Move to more managable routing options
 switch($route) {
     // TODO: Document routes
+    case 'download':
+        
 
+        return;
     case 'get-all':
         $isJSON = true;
 

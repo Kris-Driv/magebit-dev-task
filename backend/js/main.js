@@ -4,11 +4,18 @@ let domain = null;
 let domains = [];
 let items = [];
 let paginationData = [];
+let selected = [];
+let selectedData = null;
+let download = null;
 
 function init() {
     table = document.getElementById("subscription-table");
     tbody = table.getElementsByTagName("tbody")[0];
     pagination = document.getElementById("pagination");
+    download = document.getElementById("download");
+    selectedData = new Map();
+
+    download.addEventListener("click", () => downloadCSV(selectedData));
 
     populateTable(page, null);
     populateDomains();
@@ -34,12 +41,12 @@ function populateDomains() {
                 // Reset the domain filter
                 if(domain === b) {
                     btn.classList.remove("btn-primary");
-
+                    btn.classList.add("btn-dark");
                     populateTable(page);
+                } else {
+                    populateTable(page, b);
                     populateDomains();
                 }
-                populateTable(page, b);
-                populateDomains();
             });
             li.appendChild(btn)
             list.appendChild(li);
@@ -65,19 +72,24 @@ function populateTable(_page, _domain = null) {
         tbody.innerHTML = "";
 
         items = response.items;
+        sorted = [];
         for(var i = 0; i < items.length; i++) {
             let row = tbody.insertRow(i);
-            row.id = 'row-' + i;
+            let id = items[i].id || i;
+            sorted[id] = items[i];
+            row.id = 'row-' + id;
+            row.dataset.id = id;
             let email = row.insertCell(0);
             email.innerHTML = items[i].email;
             let date = row.insertCell(1);
             date.innerHTML = timeConverter(items[i].created_at);
             let actionsColumn = row.insertCell(2);
-            let actionsButtons = createActions(i);
+            actionsColumn.style = "position: relative;";
+            let actionsButtons = createActions(id);
             actionsButtons.forEach(b => actionsColumn.appendChild(b));
         }
+        items = sorted;
 
-        console.log(response);
         updatePagination(response.page, response.next, response.previous, response['total-pages']);
     }, err => {
         console.error(err);
@@ -92,8 +104,34 @@ function createActions(id) {
     del.addEventListener('click', () => {
         deleteSubscription(id);
     });
-    console.log(del);
-    return [del];
+
+    let checkbox = document.createElement('input');
+    checkbox.type = "checkbox";
+    checkbox.name = "download";
+    checkbox.value = false;
+    checkbox.id = "checkbox-" + id;
+    checkbox.style = "position: absolute; right: 5px; width: 20px; height: 20px; top: 16px";
+    checkbox.checked = selected.indexOf(id) >= 0;
+    checkbox.addEventListener("click", () => {
+        //console.log({id, indexOf: selected.indexOf(id)});
+        if(selected.indexOf(id) >= 0) {
+            selected.splice(selected.indexOf(id), 1);
+            selectedData.delete(id);
+        } else {
+            selectedData.set(id, items[id]);
+            selected.push(id);
+            // console.log(items);
+        }
+        console.log(selectedData);
+        updateDownload();
+    });
+
+    return [del, checkbox];
+}
+
+function updateDownload() {
+    download.disabled = selected.length <= 0;
+    download.innerHTML = ("Download" + (download.disabled ? "" : ` (${selected.length})`));
 }
 
 function deleteSubscription(id) {
@@ -107,16 +145,16 @@ function deleteSubscription(id) {
                 email,
             }
         }).then(response => {
-            console.log(response);
+            // deleted
         });
     }
 
     populateTable(page, domain);
+    updateDownload();
     populateDomains();
 }
 
 function updatePagination(currentPage, nextPage, previousPage, maxPages) {
-    console.log({currentPage, nextPage, previousPage, maxPages});
     pagination.innerHTML = "";
 
     let li;
@@ -158,6 +196,32 @@ function updatePagination(currentPage, nextPage, previousPage, maxPages) {
     if(nextPage === null) li.classList.add('disabled');
     li.appendChild(nb);
     pagination.appendChild(li);
+}
+
+function downloadCSV(list, keys) {
+    let csv = "";
+    keys = keys || ["id", "email", "created_at"];
+
+    const headers = keys.map(key => `"${key}"`).join(',');
+
+    list.forEach(entry => {
+        console.log(entry);
+        keys.forEach(key => csv += entry[key] + ",");
+        csv = csv.trimEnd(",") + "\n";
+    });
+    csv = headers + "\n" + csv.replace(/,\s*$/, "");
+
+    const blob = new Blob(["\ufeff", csv], {type: 'text/csv'});
+    var url = URL.createObjectURL(blob);
+    var downloadLink = document.createElement("a");
+    downloadLink.href = url;
+    downloadLink.download = "emails.csv";
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.appendChild(downloadLink);
+    URL.revokeObjectURL(url);
+
+    console.log(blob);
 }
 
 function timeConverter(time){

@@ -11,7 +11,7 @@ define('SQLITE3_DATABASE', './pineapple.db');
 // I will not bother implementing environments
 
 $config = [
-    "connection" => "sql3",
+    "connection" => "mysql",
 
     "mysql" => [
         "host" => MYSQL_HOST,

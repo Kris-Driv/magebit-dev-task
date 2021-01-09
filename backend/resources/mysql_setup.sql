@@ -1,4 +1,5 @@
 CREATE TABLE IF NOT EXISTS subscriptions (
-    email VARCHAR(55) PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(55) UNIQUE,
     created_at INT NOT NULL
 );
