@@ -33,6 +33,9 @@ class Application {
 
     public function validateEmail(string $email): array {
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            if(strtolower(substr($email, -2, 2)) === "co") {
+                return ["We are not accepting subscriptions from Colombia emails"];
+            }
             return [];
         } else {
             return ["$email is not a valid email"];
