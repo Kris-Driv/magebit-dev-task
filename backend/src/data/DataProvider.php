@@ -21,6 +21,8 @@ abstract class DataProvider {
 
     public abstract function deleteSubscription(string $email): void;
 
+    public abstract function isEmailRegistered(string $email): bool;
+
     public abstract function close();
 
     public abstract function ready(): bool;

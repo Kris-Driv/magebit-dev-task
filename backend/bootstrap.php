@@ -25,3 +25,6 @@ require('config.php');
 require('src/Application.php');
 
 $app = new Application($config);
+
+// Disable CORS
+$app->cors();

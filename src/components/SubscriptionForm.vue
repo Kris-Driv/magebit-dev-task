@@ -11,9 +11,7 @@
                 v-model="email"
                 v-on:keydown="validate"
                 >
-            <a href="#" class="custom-input__submit" v-on:click="submitForm">
-                <img src="../assets/images/ic_arrow.svg" alt="">
-            </a>
+            <a href="#" class="custom-input__submit" v-on:click="submitForm">SEND</a>
         </div>
         <div class="tos">
             <input class="tos__checkbox" type="checkbox">
@@ -57,7 +55,16 @@ export default {
             this.validate();
 
             // if(this.validated) {
-                
+                this.$http.get('http://localhost:8000/insert', {
+                    params: {
+                        email: this.email
+                    }
+                }).then(response => {
+                    // redirect
+                    console.log(response);
+                }, err => {
+                    console.error(err);
+                });
             // }
         },
         validate: function() {

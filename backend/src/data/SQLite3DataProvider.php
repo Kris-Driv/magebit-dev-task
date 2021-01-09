@@ -70,22 +70,27 @@ class SQLite3DataProvider extends DataProvider {
      */
     public function getSubscriptionsWhereDomain(string $domain): array
     {
-        $domain = SQLite3::escapeString($domain);
+        $domain = SQLite3::escapeString(strtolower($domain));
         return $this->query("SELECT * from subscriptions WHERE email LIKE '%@$domain%';");
     }
 
     public function insertNewSubscription(string $email): void
     {
-        $email = SQLite3::escapeString($email);
+        $email = SQLite3::escapeString(strtolower($email));
         $stmt = $this->connection->prepare("INSERT INTO subscriptions (email, created_at) VALUES (?, ?);");
         $stmt->bindValue(1, $email, SQLITE3_TEXT);
         $stmt->bindValue(2, time(), SQLITE3_INTEGER);
         $stmt->execute();
     }
 
+    public function isEmailRegistered(string $email): bool {
+        $email = SQLite3::escapeString(strtolower($email));
+        return !empty($this->query("SELECT * FROM subscriptions WHERE email = '$email';"));
+    }
+
     public function deleteSubscription(string $email): void
     {
-        $email = SQLite3::escapeString($email);
+        $email = SQLite3::escapeString(strtolower($email));
         $stmt = $this->connection->prepare("DELETE FROM subscriptions WHERE email = '$email';");
         $stmt->execute();
     }
